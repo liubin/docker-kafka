@@ -15,13 +15,12 @@ EXPOSE 9092 2181
 
 ENV KAFKA_HOME /opt/kafka_${KAFKA_VERSION}
 
-ADD start-kafka.sh $KAFKA_HOME/start-kafka.sh
 
 ADD config/ $KAFKA_HOME/config/
 
-RUN chmod a+x $KAFKA_HOME/start-kafka.sh
-
-CMD ["$KAFKA_HOME/start-kafka.sh"]
+ADD start-kafka.sh /start-kafka.sh
+RUN chmod +x $KAFKA_HOME/start-kafka.sh
+CMD ["/start-kafka.sh"]
 
 # Install Ruby
 RUN apk update && apk upgrade && apk --update add \
