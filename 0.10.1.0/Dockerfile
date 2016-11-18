@@ -4,15 +4,16 @@ MAINTAINER bin liu
 
 RUN apk add --update wget coreutils
 
+ENV KAFKA_VERSION 2.11-0.10.1.0
 RUN cd /tmp && \
-    wget http://ftp.riken.jp/net/apache/kafka/0.10.1.0/kafka_2.11-0.10.1.0.tgz && \
-    tar xfz kafka_2.11-0.10.1.0.tgz -C /opt && \
-    rm /tmp/kafka_2.11-0.10.1.0.tgz
+    wget http://ftp.riken.jp/net/apache/kafka/0.10.1.0/kafka_${KAFKA_VERSION}.tgz && \
+    tar xfz kafka_${KAFKA_VERSION}.tgz -C /opt && \
+    rm /tmp/kafka_${KAFKA_VERSION}.tgz
 
 VOLUME ["/kafka", "/zookeeper"]
 EXPOSE 9092 2181
 
-ENV KAFKA_HOME /opt/kafka_2.11-0.10.0.1
+ENV KAFKA_HOME /opt/kafka_${KAFKA_VERSION}
 
 ADD start-kafka.sh $KAFKA_HOME/start-kafka.sh
 
@@ -22,6 +23,13 @@ RUN chmod a+x $KAFKA_HOME/start-kafka.sh
 
 CMD ["$KAFKA_HOME/start-kafka.sh"]
 
+# Install Ruby
+RUN apk update && apk upgrade && apk --update add \
+    ruby ruby-irb ruby-rake ruby-io-console ruby-bigdecimal ruby-json ruby-bundler ruby-dev gcc build-base\
+    libstdc++ tzdata bash ca-certificates \
+    &&  echo 'gem: --no-document' > /etc/gemrc \
+    && rm -rf /var/cache/apk/*
+
 # Install airbnb/kafkat
-# RUN gem install kafkat
-# COPY etc/kafkatcfg /etc/kafkatcfg
+RUN gem install kafkat
+COPY etc/kafkatcfg /etc/kafkatcfg
