@@ -35,5 +35,15 @@ docker exec kafka $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localh
 ### Consume messages
 
 ```
-docker exec kafka $KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+docker exec kafka $KAFKA_HOME/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+```
+
+## kafkat
+
+This is an easy using tools for manage kafka resources.
+
+You can use this for a help:
+
+```
+docker exec kafka kafkat
 ```
