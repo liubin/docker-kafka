@@ -19,7 +19,7 @@ ENV KAFKA_HOME /opt/kafka_${KAFKA_VERSION}
 ADD config/ $KAFKA_HOME/config/
 
 ADD start-kafka.sh /start-kafka.sh
-RUN chmod +x $KAFKA_HOME/start-kafka.sh
+RUN chmod +x /start-kafka.sh
 CMD ["/start-kafka.sh"]
 
 # Install Ruby
