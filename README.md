@@ -17,7 +17,7 @@ Connect from producer/consumer use `kafka:9092`
 ### Create topic
 
 ```
-docker exec kafka kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 12 --topic test
+docker exec kafka kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic test
 ```
 
 ### List topics
@@ -35,6 +35,6 @@ docker exec kafka kafka-console-producer.sh --broker-list localhost:9092 --topic
 ### Consume messages
 
 ```
-docker exec kafka kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+docker exec kafka kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
 ```
 
